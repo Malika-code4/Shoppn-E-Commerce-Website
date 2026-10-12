@@ -1,3 +1,11 @@
-error/error.log
+﻿error/error.log
 *.log
 .vscode/
+
+# Database credentials
+core/db_cred.php
+
+# Environment and secret files
+.env
+.env.*
+!.env.example

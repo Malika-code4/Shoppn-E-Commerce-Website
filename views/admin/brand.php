@@ -5,95 +5,109 @@ require_once __DIR__ . '/../../controllers/ProductController.php';
 
 require_admin();
 
-$productController = new ProductController();
+$controller = new ProductController();
 
-$brands = $productController->getAllBrands();
+$brands = $controller->getAllBrands();
+
+$edit_id = filter_var(
+    $_GET['edit_id'] ?? '',
+    FILTER_VALIDATE_INT
+);
+
+$edit_brand = null;
+
+if ($edit_id !== false && $edit_id > 0) {
+    $edit_brand = $controller->getBrandById($edit_id);
+}
+
+$success = $_SESSION['success'] ?? '';
+$error = $_SESSION['error'] ?? '';
+
+unset($_SESSION['success']);
+unset($_SESSION['error']);
+
+require_once __DIR__ . '/../layout/header.php';
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<h2>Brand Management</h2>
 
-<head>
+<?php if ($success): ?>
 
-    <meta charset="UTF-8">
+    <p>
+        <?php echo htmlspecialchars($success); ?>
+    </p>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Manage Brands - Shoppn</title>
-
-    <link rel="stylesheet" href="../../css/style.css">
-
-</head>
-
-<body>
-
-<?php require_once __DIR__ . '/../layout/header.php'; ?>
+<?php endif; ?>
 
 
-<div class="container">
+<?php if ($error): ?>
 
-    <h2>Manage Brands</h2>
+    <p>
+        <?php echo htmlspecialchars($error); ?>
+    </p>
 
-
-    <?php if (isset($_SESSION['success'])): ?>
-
-        <p class="success">
-
-            <?php
-
-            echo htmlspecialchars($_SESSION['success']);
-
-            unset($_SESSION['success']);
-
-            ?>
-
-        </p>
-
-    <?php endif; ?>
+<?php endif; ?>
 
 
-    <?php if (isset($_SESSION['error'])): ?>
+<!-- ADD / EDIT BRAND FORM -->
 
-        <p class="error">
+<?php if ($edit_brand): ?>
 
-            <?php
-
-            echo htmlspecialchars($_SESSION['error']);
-
-            unset($_SESSION['error']);
-
-            ?>
-
-        </p>
-
-    <?php endif; ?>
-
-
-    <h3>Add New Brand</h3>
-
+    <h3>Edit Brand</h3>
 
     <form
-        action="../../actions/add_brand_action.php"
         method="POST"
+        action="../../actions/update_brand_action.php"
     >
 
-        <div>
+        <input
+            type="hidden"
+            name="brand_id"
+            value="<?php echo (int) $edit_brand['brand_id']; ?>"
+        >
 
-            <label for="brand_name">
-                Brand Name
-            </label>
+        <label for="brand_name">
+            Brand Name
+        </label>
 
-            <input
-                type="text"
-                id="brand_name"
-                name="brand_name"
-                maxlength="100"
-                required
-            >
+        <input
+            type="text"
+            id="brand_name"
+            name="brand_name"
+            value="<?php echo htmlspecialchars($edit_brand['brand_name']); ?>"
+            required
+        >
 
-        </div>
+        <button type="submit">
+            Update Brand
+        </button>
 
+        <a href="brand.php">
+            Cancel
+        </a>
+
+    </form>
+
+<?php else: ?>
+
+    <h3>Add Brand</h3>
+
+    <form
+        method="POST"
+        action="../../actions/add_brand_action.php"
+    >
+
+        <label for="brand_name">
+            Brand Name
+        </label>
+
+        <input
+            type="text"
+            id="brand_name"
+            name="brand_name"
+            required
+        >
 
         <button type="submit">
             Add Brand
@@ -101,70 +115,71 @@ $brands = $productController->getAllBrands();
 
     </form>
 
+<?php endif; ?>
 
-    <h3>Existing Brands</h3>
 
+<!-- BRAND TABLE -->
 
-    <?php if (!empty($brands)): ?>
+<h3>All Brands</h3>
 
-        <table border="1">
+<table border="1">
 
-            <thead>
+    <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Brand Name</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <?php if (empty($brands)): ?>
+
+            <tr>
+                <td colspan="3">
+                    No brands found.
+                </td>
+            </tr>
+
+        <?php else: ?>
+
+            <?php foreach ($brands as $brand): ?>
 
                 <tr>
-                    <th>ID</th>
-                    <th>Brand Name</th>
-                    <th>Action</th>
+
+                    <td>
+                        <?php echo (int) $brand['brand_id']; ?>
+                    </td>
+
+                    <td>
+                        <?php echo htmlspecialchars($brand['brand_name']); ?>
+                    </td>
+
+                    <td>
+
+                        <a
+                            href="brand.php?edit_id=<?php echo (int) $brand['brand_id']; ?>"
+                        >
+                            Edit
+                        </a>
+
+                    </td>
+
                 </tr>
 
-            </thead>
+            <?php endforeach; ?>
 
+        <?php endif; ?>
 
-            <tbody>
+    </tbody>
 
-                <?php foreach ($brands as $brand): ?>
+</table>
 
-                    <tr>
+<?php
 
-                        <td>
-                            <?php echo (int) $brand['brand_id']; ?>
-                        </td>
+require_once __DIR__ . '/../layout/footer.php';
 
-                        <td>
-                            <?php echo htmlspecialchars($brand['brand_name']); ?>
-                        </td>
-
-                        <td>
-
-                            <a
-                                href="brand.php?edit_id=<?php echo (int) $brand['brand_id']; ?>"
-                            >
-                                Edit
-                            </a>
-
-                        </td>
-
-                    </tr>
-
-                <?php endforeach; ?>
-
-            </tbody>
-
-        </table>
-
-    <?php else: ?>
-
-        <p>No brands available.</p>
-
-    <?php endif; ?>
-
-
-</div>
-
-
-<?php require_once __DIR__ . '/../layout/footer.php'; ?>
-
-
-</body>
-
-</html>
+?>

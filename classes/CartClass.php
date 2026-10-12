@@ -1,3 +1,4 @@
+
 <?php
 
 require_once __DIR__ . '/../core/core.php';
@@ -6,7 +7,7 @@ class CartClass extends Database
 {
     public function getCart($customer_id)
     {
-        $sql = "SELECT * FROM cart WHERE customer_id = ?";
+        $sql = "SELECT * FROM cart WHERE c_id = ?";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -23,8 +24,10 @@ class CartClass extends Database
 
     public function addToCart($customer_id, $product_id, $qty)
     {
-        $sql = "INSERT INTO cart (customer_id, product_id, qty)
-                VALUES (?, ?, ?)";
+        $ip_add = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        $sql = "INSERT INTO cart (p_id, ip_add, c_id, qty)
+                VALUES (?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -33,15 +36,20 @@ class CartClass extends Database
             return false;
         }
 
-        $stmt->bind_param("iii", $customer_id, $product_id, $qty);
+        $stmt->bind_param(
+            "isii",
+            $product_id,
+            $ip_add,
+            $customer_id,
+            $qty
+        );
 
         return $stmt->execute();
     }
-
+    
     public function removeFromCart($cart_id)
     {
         $sql = "DELETE FROM cart WHERE cart_id = ?";
-
         $stmt = $this->conn->prepare($sql);
 
         if (!$stmt) {
@@ -50,7 +58,6 @@ class CartClass extends Database
         }
 
         $stmt->bind_param("i", $cart_id);
-
         return $stmt->execute();
     }
 }

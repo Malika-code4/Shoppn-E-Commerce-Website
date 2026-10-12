@@ -1,0 +1,357 @@
+
+/* =========================
+   SHOPPN - GENERAL STYLES
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #263238;
+    background-color: #f5f7fa;
+}
+
+h1, h2, h3, h4 {
+    color: #183153;
+    line-height: 1.3;
+}
+
+h1 {
+    margin-top: 25px;
+    font-size: 30px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: #1769aa;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0d4778;
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #dce2e8;
+    margin: 20px 0;
+}
+
+/* =========================
+   HEADER AND NAVIGATION
+========================= */
+
+header {
+    background-color: #183153;
+    color: white;
+    padding: 18px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header h2 {
+    margin: 0;
+    color: white;
+}
+
+header h2 a {
+    color: white;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: white;
+}
+
+header nav a {
+    color: white;
+    font-size: 15px;
+}
+
+header nav a:hover {
+    color: #a9d6ff;
+}
+
+/* =========================
+   PAGE CONTENT
+========================= */
+
+body > h1,
+body > h2,
+body > h3,
+body > p,
+body > table,
+body > form,
+body > div,
+body > section {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+body > h1 {
+    margin-top: 30px;
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button,
+input[type="submit"],
+input[type="button"] {
+    background-color: #1769aa;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #104c80;
+}
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid #8bc5f5;
+    outline-offset: 2px;
+}
+
+/* =========================
+   FORMS AND INPUTS
+========================= */
+
+form {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+textarea,
+select {
+    width: 100%;
+    max-width: 450px;
+    padding: 11px 12px;
+    margin: 5px 0 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 15px;
+}
+
+input[type="number"] {
+    max-width: 120px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+}
+
+/* =========================
+   TABLES AND SHOPPING CART
+========================= */
+
+table {
+    width: 90%;
+    margin: 25px auto;
+    border-collapse: collapse;
+    background-color: white;
+    border: 1px solid #dce2e8;
+}
+
+th {
+    background-color: #183153;
+    color: white;
+    padding: 13px;
+    text-align: left;
+}
+
+td {
+    padding: 13px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+tr:hover td {
+    background-color: #f8fafc;
+}
+
+td img {
+    max-width: 100%;
+    height: auto;
+}
+
+td form {
+    margin: 0;
+}
+
+/* =========================
+   PRODUCT IMAGES
+========================= */
+
+img {
+    max-width: 100%;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 350px;
+    height: 280px;
+    object-fit: contain;
+    background-color: white;
+    border-radius: 8px;
+}
+
+/* Common product grid class names */
+.product-grid,
+.products-grid,
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+    width: 90%;
+    max-width: 1200px;
+    margin: 25px auto;
+}
+
+.product-card,
+.product-item {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover,
+.product-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+}
+
+.product-card img,
+.product-item img {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+/* =========================
+   NOTICES AND MESSAGES
+========================= */
+
+.success,
+.alert-success {
+    background-color: #e8f7ed;
+    color: #176534;
+    border: 1px solid #b8e5c5;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin: 15px 5%;
+}
+
+.error,
+.alert-error {
+    background-color: #fff0f0;
+    color: #a32121;
+    border: 1px solid #f2c1c1;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin: 15px 5%;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    margin-top: 40px;
+    padding: 22px 5%;
+    background-color: #183153;
+    color: white;
+    text-align: center;
+}
+
+footer a {
+    color: white;
+}
+
+/* =========================
+   MOBILE RESPONSIVENESS
+========================= */
+
+@media (max-width: 700px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 5%;
+    }
+
+    header nav {
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    table {
+        width: 95%;
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    .product-grid,
+    .products-grid,
+    .products-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+    }
+}

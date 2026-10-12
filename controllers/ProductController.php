@@ -30,6 +30,12 @@ class ProductController
         return $this->product->getBrandById((int) $id);
     }
 
+    // Alias — some views call getBrandById() directly
+    public function getBrandById($id)
+    {
+        return $this->getBrand($id);
+    }
+
     public function updateBrand($id, $name)
     {
         if (!is_numeric($id) || (int) $id <= 0) {
@@ -60,6 +66,12 @@ class ProductController
         }
 
         return $this->product->getCategoryById((int) $id);
+    }
+
+    // Alias — some views call getCategoryById() directly
+    public function getCategoryById($id)
+    {
+        return $this->getCategory($id);
     }
 
     public function updateCategory($id, $name)

@@ -6,7 +6,7 @@ class Database
 
     public function __construct()
     {
-        require_once 'db_cred.php';
+        require_once __DIR__ . '/db_cred.php';
 
         $this->conn = new mysqli(
             DB_HOST,
@@ -19,5 +19,7 @@ class Database
             error_log($this->conn->connect_error);
             die('Connection failed.');
         }
+
+        $this->conn->set_charset('utf8mb4');
     }
 }
